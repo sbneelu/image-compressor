@@ -36,6 +36,13 @@ int main(int argc, char **argv)
         return 4;
     }
 
+    for (int i = 0; i < 4; i++)
+        if (compressed_file->identifier[i] != compression_identifier[i])
+        {
+            printf("Error: file %s is not in the correct format for this compression algorithm.\n", input);
+            return 5;
+        }
+
     image_t image = decompress(compressed_file);
     write_image(out, image);
     

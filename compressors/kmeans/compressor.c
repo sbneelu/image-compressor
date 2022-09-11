@@ -4,40 +4,10 @@
 #include "../../shared.h"
 #include "../../image.h"
 #include "../../compressor.h"
+#include "utils.h"
 #include "kmeans.h"
 
-// TODO Doc
-void pixel_to_bytes(pixel_t pixel, byte *bytes)
-{
-    bytes[0] = pixel->r;
-    bytes[1] = pixel->g;
-    bytes[2] = pixel->b;
-}
-
-// TODO Doc
-pixel_t bytes_to_pixel(byte *bytes)
-{
-    pixel_t pixel = malloc(sizeof(struct pixel));
-    pixel->r = bytes[0];
-    pixel->g = bytes[1];
-    pixel->b = bytes[2];
-    return pixel;
-}
-
-// TODO Doc
-void int_to_bytes(int i, byte *bytes)
-{
-    bytes[0] = (i >> 24) & 0xFF;
-    bytes[1] = (i >> 16) & 0xFF;
-    bytes[2] = (i >> 8) & 0xFF;
-    bytes[3] = i & 0xFF;
-}
-
-// TODO Doc
-int bytes_to_int(byte *bytes)
-{
-    return (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3];
-}
+char *compression_identifier = "KMNS";
 
 compressed_file_t compress(image_t image)
 {

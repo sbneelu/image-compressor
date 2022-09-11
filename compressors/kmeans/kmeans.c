@@ -23,7 +23,8 @@ unsigned long long kmeans(
     int max_iterations,
     byte *assignments, pixel_t *centroids)
 {
-    pixel_array_copy(pixels, centroids, k);
+    for (int i = 0; i < k; i++)
+        pixel_copy(pixels[rand() % num_of_pixels], centroids[i]);
     pixel_t *prev_centroids = malloc(sizeof(pixel_t) * k);
     for (int i = 0; i < k; i++)
         prev_centroids[i] = malloc(sizeof(struct pixel));
@@ -154,6 +155,12 @@ void attempt_kmeans(
 
     if (max_k > num_of_pixels)
         max_k = num_of_pixels;
+    
+    if (max_k > 255)
+        max_k = 255;
+    
+    if (min_k > max_k)
+        min_k = max_k;
 
     *k = min_k;
 

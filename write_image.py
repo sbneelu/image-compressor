@@ -1,18 +1,20 @@
 from PIL import Image
+from sys import argv
 
-with open('image.txt', 'r') as f:
+_, input_file, output_file = argv
+
+with open(input_file, 'r') as f:
     lines = f.readlines()
 
-width = int(lines[0])
-height = int(lines[1])
+width, height = map(int, lines[0].split())
 
 image = Image.new('RGB', (width, height))
 
+pixels = lines[1:]
 for i in range(width):
     for j in range(height):
-        image.putpixel(
-            (i, j),
-            tuple(int(c) for c in lines[i * width + j + 2].split())
-        )
+        pixel = pixels[i * height + j]
+        r, g, b = map(int, pixel.split())
+        image.putpixel((i, j), (r, g, b))
 
-image.save('new_image.jpg')
+image.save(output_file)

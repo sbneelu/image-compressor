@@ -1,5 +1,7 @@
 #pragma once
 
+char* compression_identifier;
+
 /**
  * @brief Compress an image
  * 

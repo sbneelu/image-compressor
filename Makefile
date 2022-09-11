@@ -3,8 +3,8 @@ DEBUG_FLAGS=-fsanitize=address -fsanitize=undefined -g -fno-omit-frame-pointer -
 SHARED_SOURCE_FILES=fileio.c image.c
 SHARED_OBJECT_FILES=fileio.o image.o
 
-KMEANS_COMPRESSOR_SOURCE_FILES=compressors/kmeans/compressor.c compressors/kmeans/kmeans.c
-KMEANS_COMPRESSOR_OBJECT_FILES=compressor.o kmeans.o
+KMEANS_COMPRESSOR_SOURCE_FILES=compressors/kmeans/compressor.c compressors/kmeans/kmeans.c compressors/kmeans/utils.c
+KMEANS_COMPRESSOR_OBJECT_FILES=compressor.o kmeans.o utils.o
 
 all:
 	make kmeans

@@ -1,9 +1,7 @@
 #pragma once
 
 /*
-    IDENTIFIER: KMNS
-
-    CONTENT:
+    STRUCTURE:
     | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
     |     WIDTH     |     HEIGHT    |
     | K |    C1     |    C2     | C3|

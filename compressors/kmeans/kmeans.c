@@ -155,10 +155,10 @@ void attempt_kmeans(
 
     if (max_k > num_of_pixels)
         max_k = num_of_pixels;
-    
+
     if (max_k > 255)
         max_k = 255;
-    
+
     if (min_k > max_k)
         min_k = max_k;
 
@@ -187,7 +187,7 @@ kmeans_compressed_image_t compress_with_kmeans(image_t image)
 {
     int num_of_pixels = image->width * image->height;
     byte *assignments = malloc(num_of_pixels);
-    pixel_t *centroids = malloc(sizeof(pixel_t) * MAX_K); 
+    pixel_t *centroids = malloc(sizeof(pixel_t) * MAX_K);
     int k;
 
     for (int i = 0; i < MAX_K; i++)
@@ -210,7 +210,7 @@ kmeans_compressed_image_t compress_with_kmeans(image_t image)
     pixel_array_copy(compressed_image->centroids, centroids, k);
     for (int i = 0; i < num_of_pixels; i++)
         compressed_image->assignments[i] = assignments[i];
-    
+
     free(assignments);
     for (int i = 0; i < MAX_K; i++)
         free(centroids[i]);

@@ -22,11 +22,8 @@ image_t read_image(FILE *fp)
 void write_image(FILE *fp, image_t image)
 {
     fprintf(fp, "%d %d\n", image->width, image->height);
-    for (int i = 0; i < image->height; i++)
-    {
-        for (int j = 0; j < image->width; j++)
-            fprintf(fp, "%hhu %hhu %hhu\n", image->pixels[i]->r, image->pixels[i]->g, image->pixels[i]->b);
-    }
+    for (int i = 0; i < image->height * image->width; i++)
+        fprintf(fp, "%hhu %hhu %hhu\n", image->pixels[i]->r, image->pixels[i]->g, image->pixels[i]->b);
 }
 
 compressed_file_t read_compressed_file(FILE *fp)

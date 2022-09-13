@@ -1,3 +1,4 @@
+#include <stdio.h> // TODO Remove this
 #include <stdlib.h>
 #include <stdbool.h>
 #include <limits.h>
@@ -24,14 +25,14 @@ unsigned long long kmeans(
     byte *assignments, pixel_t *centroids)
 {
     for (int i = 0; i < k; i++)
-        pixel_copy(pixels[rand() % num_of_pixels], centroids[i]);
+        pixel_copy(centroids[i], pixels[rand() % num_of_pixels]);
     pixel_t *prev_centroids = malloc(sizeof(pixel_t) * k);
     for (int i = 0; i < k; i++)
         prev_centroids[i] = malloc(sizeof(struct pixel));
 
     for (int i = 0; i < max_iterations; i++)
     {
-        pixel_array_copy(centroids, prev_centroids, k);
+        pixel_array_copy(prev_centroids, centroids, k);
 
         // For each pixel find the nearest centroid
         for (int j = 0; j < num_of_pixels; j++)

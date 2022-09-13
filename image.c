@@ -20,17 +20,17 @@ void free_compressed_file(compressed_file_t compressed_file)
     free(compressed_file);
 }
 
-void pixel_copy(const pixel_t from, pixel_t to)
+void pixel_copy(pixel_t to, const pixel_t from)
 {
     to->r = from->r;
     to->g = from->g;
     to->b = from->b;
 }
 
-void pixel_array_copy(const pixel_t *from, pixel_t *to, int len)
+void pixel_array_copy(pixel_t *to, const pixel_t *from, int len)
 {
     for (int i = 0; i < len; i++)
-        pixel_copy(from[i], to[i]);
+        pixel_copy(to[i], from[i]);
 }
 
 bool pixel_arrays_equal(const pixel_t *a, const pixel_t *b, int len)

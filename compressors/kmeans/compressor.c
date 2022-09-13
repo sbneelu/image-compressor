@@ -63,7 +63,7 @@ image_t decompress(compressed_file_t cf)
         assignments[i] = cf->content[9 + 3 * k + i];
 
     for (int i = 0; i < image->width * image->height; i++)
-        pixel_copy(centroids[assignments[i]], image->pixels[i]);
+        pixel_copy(image->pixels[i], centroids[assignments[i]]);
     
     for (int i = 0; i < k; i++)
         free(centroids[i]);

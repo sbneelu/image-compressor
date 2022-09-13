@@ -64,19 +64,19 @@ void free_compressed_file(compressed_file_t compressed_file);
 /**
  * @brief Copy a pixel.
  * 
- * @param from: the pixel to copy from
  * @param to: the pixel to copy to
+ * @param from: the pixel to copy from
  */
-void pixel_copy(const pixel_t from, pixel_t to);
+void pixel_copy(pixel_t to, const pixel_t from);
 
 /**
  * @brief Copy an array of pixels.
  * 
- * @param from: the array of pixels to copy from
  * @param to: the array of pixels to copy to
+ * @param from: the array of pixels to copy from
  * @param len: the length of the arrays
  */
-void pixel_array_copy(const pixel_t* from, pixel_t* to, int len);
+void pixel_array_copy(pixel_t* to, const pixel_t* from, int len);
 
 /**
  * @brief Check if two arrays of pixels are equal.

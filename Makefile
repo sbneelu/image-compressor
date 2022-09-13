@@ -1,40 +1,48 @@
+CC=gcc
 DEBUG_FLAGS=-fsanitize=address -fsanitize=undefined -g -fno-omit-frame-pointer -Wall -pedantic
 
-SHARED_SOURCE_FILES=fileio.c image.c
-SHARED_OBJECT_FILES=fileio.o image.o
 
-KMEANS_COMPRESSOR_SOURCE_FILES=compressors/kmeans/compressor.c compressors/kmeans/kmeans.c compressors/kmeans/utils.c
-KMEANS_COMPRESSOR_OBJECT_FILES=compressor.o kmeans.o utils.o
+FILES_SOURCE_FILES=files/files.c
+UTILS_SOURCE_FILES=utils/utils.c utils/kmeans/kmeans_utils.c utils/memory/memory_utils.c
+COMPRESSOR_SOURCE_FILES=compressor/compressor.c compressor/simple_kmeans/simple_kmeans_compressor.c
 
-all:
-	make kmeans
+SHARED_SOURCE_FILES=$(FILES_SOURCE_FILES) $(UTILS_SOURCE_FILES) $(COMPRESSOR_SOURCE_FILES)
+COMPRESS_SOURCE_FILES=compress.c
+DECOMPRESS_SOURCE_FILES=decompress.c
 
-sane:
-	make kmeans-sane
 
-kmeans:
-	make kmeans-compress
-	make kmeans-decompress
+FILES_OBJECT_FILES=files.o
+UTILS_OBJECT_FILES=utils.o kmeans_utils.o memory_utils.o
+COMPRESSOR_OBJECT_FILES=compressor.o simple_kmeans_compressor.o
 
-kmeans-sane:
-	make kmeans-compress-sane
-	make kmeans-decompress-sane
+SHARED_OBJECT_FILES=$(FILES_OBJECT_FILES) $(UTILS_OBJECT_FILES) $(COMPRESSOR_OBJECT_FILES)
+COMPRESS_OBJECT_FILES=compress.o
+DECOMPRESS_OBJECT_FILES=decompress.o
 
-kmeans-compress: ${SHARED_SOURCE_FILES} ${SHARED_HEADER_FILES}
-	gcc -c compress.c ${SHARED_SOURCE_FILES} ${KMEANS_COMPRESSOR_SOURCE_FILES}
-	gcc -o compress compress.o ${SHARED_OBJECT_FILES} ${KMEANS_COMPRESSOR_OBJECT_FILES}
 
-kmeans-decompress: ${SHARED_SOURCE_FILES} ${SHARED_HEADER_FILES}
-	gcc -c decompress.c ${SHARED_SOURCE_FILES} ${KMEANS_COMPRESSOR_SOURCE_FILES}
-	gcc -o decompress decompress.o ${SHARED_OBJECT_FILES} ${KMEANS_COMPRESSOR_OBJECT_FILES}
+all: compress decompress
+	make compress
+	make decompress
 
-kmeans-compress-sane: ${SHARED_SOURCE_FILES} ${SHARED_HEADER_FILES}
-	gcc -c compress.c ${SHARED_SOURCE_FILES} ${KMEANS_COMPRESSOR_SOURCE_FILES} ${DEBUG_FLAGS}
-	gcc -o compress compress.o ${SHARED_OBJECT_FILES} ${KMEANS_COMPRESSOR_OBJECT_FILES} ${DEBUG_FLAGS}
+sane: compress decompress
+	make compress-sane
+	make decompress-sane
 
-kmeans-decompress-sane: ${SHARED_SOURCE_FILES} ${SHARED_HEADER_FILES}
-	gcc -c decompress.c ${SHARED_SOURCE_FILES} ${KMEANS_COMPRESSOR_SOURCE_FILES} ${DEBUG_FLAGS}
-	gcc -o decompress decompress.o ${SHARED_OBJECT_FILES} ${KMEANS_COMPRESSOR_OBJECT_FILES} ${DEBUG_FLAGS}
+compress: $(COMPRESS_SOURCE_FILES) $(SHARED_SOURCE_FILES)
+	$(CC) -c $(COMPRESS_SOURCE_FILES) $(SHARED_SOURCE_FILES)
+	$(CC) -o compress $(COMPRESS_OBJECT_FILES) $(SHARED_OBJECT_FILES)
+
+decompress: $(DECOMPRESS_SOURCE_FILES) $(SHARED_SOURCE_FILES)
+	$(CC) -c $(DECOMPRESS_SOURCE_FILES) $(SHARED_SOURCE_FILES)
+	$(CC) -o decompress $(DECOMPRESS_OBJECT_FILES) $(SHARED_OBJECT_FILES)
+
+compress-sane: $(COMPRESS_SOURCE_FILES) $(SHARED_SOURCE_FILES)
+	$(CC) -c $(DEBUG_FLAGS) $(COMPRESS_SOURCE_FILES) $(SHARED_SOURCE_FILES)
+	$(CC) -o compress $(DEBUG_FLAGS) $(COMPRESS_OBJECT_FILES) $(SHARED_OBJECT_FILES)
+
+decompress-sane: $(DECOMPRESS_SOURCE_FILES) $(SHARED_SOURCE_FILES)
+	$(CC) -c $(DEBUG_FLAGS) $(DECOMPRESS_SOURCE_FILES) $(SHARED_SOURCE_FILES)
+	$(CC) -o decompress $(DEBUG_FLAGS) $(DECOMPRESS_OBJECT_FILES) $(SHARED_OBJECT_FILES)
 
 clean:
 	rm -f *.o

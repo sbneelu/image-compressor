@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "shared.h"
-#include "image.h"
-#include "fileio.h"
-#include "compressor.h"
+#include "files/files.h"
+#include "utils/memory/memory_utils.h"
+#include "compressor/compressor.h"
 
 int main(int argc, char **argv)
 {
@@ -36,12 +36,10 @@ int main(int argc, char **argv)
         return 4;
     }
 
-    for (int i = 0; i < 4; i++)
-        if (compressed_file->identifier[i] != compression_identifier[i])
-        {
-            printf("Error: file %s is not in the correct format for this compression algorithm.\n", input);
-            return 5;
-        }
+    // if (!is_valid_format(compressed_file->format_identifier)) {
+    //     printf("Error: invalid format identifier - compressed file may be corrupted\n");
+    //     return 5;
+    // } TODO
 
     image_t image = decompress(compressed_file);
     write_image(out, image);

@@ -1,20 +1,20 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "shared.h"
-#include "image.h"
-#include "fileio.h"
-#include "image.h"
-#include "compressor.h"
+#include "files/files.h"
+#include "utils/memory/memory_utils.h"
+#include "compressor/compressor.h"
 
 int main(int argc, char **argv)
 {
-    if (argc != 3)
+    if (argc != 4)
     {
-        printf("Usage: ./compress <input> <output>\n");
+        printf("Usage: ./compress <format identifier> <input> <output>\n");
         return 1;
     }
-    char *input = argv[1];
-    char *output = argv[2];
+    char *format_identifier = argv[1];
+    char *input = argv[2];
+    char *output = argv[3];
 
     FILE *in = fopen(input, "r");
     if (in == NULL)
@@ -37,7 +37,13 @@ int main(int argc, char **argv)
         return 4;
     }
 
-    compressed_file_t compressed_file = compress(image);
+    byte format[4] = {format_identifier[0], format_identifier[1], format_identifier[2], format_identifier[3]};
+    // if (!is_valid_format(format)) {
+    //     printf("Error: invalid format identifier %s\n", format_identifier);
+    //     return 5;
+    // } TODO
+
+    compressed_file_t compressed_file = compress(image, format);
     write_compressed_file(out, compressed_file);
     
     fclose(in);

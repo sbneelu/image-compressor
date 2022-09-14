@@ -36,7 +36,7 @@ unsigned int bytes_to_unsigned_int(byte *bytes)
     return (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3];
 }
 
-int square_distance(pixel_t a, pixel_t b)
+unsigned int square_distance(pixel_t a, pixel_t b)
 {
     return (a->r - b->r) * (a->r - b->r) + (a->g - b->g) * (a->g - b->g) + (a->b - b->b) * (a->b - b->b);
 }
@@ -49,16 +49,16 @@ pixel_t pixel_copy(pixel_t to, const pixel_t from)
     return to;
 }
 
-pixel_t *pixel_array_copy(pixel_t *to, const pixel_t *from, int len)
+pixel_t *pixel_array_copy(pixel_t *to, const pixel_t *from, unsigned int len)
 {
-    for (int i = 0; i < len; i++)
+    for (unsigned int i = 0; i < len; i++)
         pixel_copy(to[i], from[i]);
     return to;
 }
 
-bool pixel_arrays_equal(const pixel_t *a, const pixel_t *b, int len)
+bool pixel_arrays_equal(const pixel_t *a, const pixel_t *b, unsigned int len)
 {
-    for (int i = 0; i < len; i++)
+    for (unsigned int i = 0; i < len; i++)
     {
         if (a[i]->r != b[i]->r || a[i]->g != b[i]->g || a[i]->b != b[i]->b)
             return false;
@@ -66,19 +66,29 @@ bool pixel_arrays_equal(const pixel_t *a, const pixel_t *b, int len)
     return true;
 }
 
-byte *byte_array_copy(byte *to, const byte *from, int len)
+byte *byte_array_copy(byte *to, const byte *from, unsigned int len)
 {
-    for (int i = 0; i < len; i++)
+    for (unsigned int i = 0; i < len; i++)
         to[i] = from[i];
     return to;
 }
 
-bool byte_arrays_equal(const byte *a, const byte *b, int len)
+bool byte_arrays_equal(const byte *a, const byte *b, unsigned int len)
 {
-    for (int i = 0; i < len; i++)
+    for (unsigned int i = 0; i < len; i++)
     {
         if (a[i] != b[i])
             return false;
     }
     return true;
+}
+
+bool format_identifiers_equal(const byte *a, const char *b)
+{
+    byte *b_bytes = malloc(sizeof(byte) * 4);
+    for (unsigned int i = 0; i < 4; i++)
+        b_bytes[i] = (byte)b[i];
+    bool equal = byte_arrays_equal(a, b_bytes, 4);
+    free(b_bytes);
+    return equal;
 }

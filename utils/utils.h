@@ -39,7 +39,7 @@ unsigned int bytes_to_unsigned_int(byte *bytes);
  * @param b: the second pixel
  * @return the square of the cartesian distance between the two pixels
  */
-int square_distance(pixel_t a, pixel_t b);
+unsigned int square_distance(pixel_t a, pixel_t b);
 
 /**
  * @brief Copy a pixel.
@@ -58,7 +58,7 @@ pixel_t pixel_copy(pixel_t to, const pixel_t from);
  * @param len: the length of the arrays
  * @return the array of pixels copied to
  */
-pixel_t *pixel_array_copy(pixel_t *to, const pixel_t *from, int len);
+pixel_t *pixel_array_copy(pixel_t *to, const pixel_t *from, unsigned int len);
 
 /**
  * @brief Check if two arrays of pixels are equal.
@@ -68,7 +68,7 @@ pixel_t *pixel_array_copy(pixel_t *to, const pixel_t *from, int len);
  * @param len: the length of the arrays
  * @return true if the arrays are equal, false otherwise
  */
-bool pixel_arrays_equal(const pixel_t *a, const pixel_t *b, int len);
+bool pixel_arrays_equal(const pixel_t *a, const pixel_t *b, unsigned int len);
 
 /**
  * @brief Check if two arrays of bytes are equal.
@@ -78,7 +78,7 @@ bool pixel_arrays_equal(const pixel_t *a, const pixel_t *b, int len);
  * @param len: the length of the arrays
  * @return true if the arrays are equal, false otherwise
  */
-bool byte_arrays_equal(const byte *a, const byte *b, int len);
+bool byte_arrays_equal(const byte *a, const byte *b, unsigned int len);
 
 /**
  * @brief Copy an array of bytes.
@@ -88,4 +88,13 @@ bool byte_arrays_equal(const byte *a, const byte *b, int len);
  * @param len: the length of the arrays
  * @return the array of bytes copied to
  */
-byte *byte_array_copy(byte *to, const byte *from, int len);
+byte *byte_array_copy(byte *to, const byte *from, unsigned int len);
+
+/**
+ * @brief Check if format identifiers are equal.
+ *
+ * @param a: the first format identifier
+ * @param b: the second format identifier
+ * @return true if the format identifiers are equal, false otherwise
+ */
+bool format_identifiers_equal(const byte *a, const char *b);

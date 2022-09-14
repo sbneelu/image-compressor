@@ -7,33 +7,33 @@
 #include "../utils.h"
 #include "kmeans_utils.h"
 
-
 unsigned long long kmeans(
     const pixel_t *pixels, unsigned int num_of_pixels,
     unsigned int k,
     unsigned int max_iterations,
     unsigned int *assignments, pixel_t *centroids)
 {
+
     for (int i = 0; i < k; i++)
         pixel_copy(centroids[i], pixels[rand() % num_of_pixels]);
     pixel_t *prev_centroids = malloc(sizeof(pixel_t) * k);
-    for (int i = 0; i < k; i++)
+    for (unsigned int i = 0; i < k; i++)
         prev_centroids[i] = malloc(sizeof(struct pixel));
 
-    for (int i = 0; i < max_iterations; i++)
+    for (unsigned int i = 0; i < max_iterations; i++)
     {
         pixel_array_copy(prev_centroids, centroids, k);
 
         // For each pixel find the nearest centroid
-        for (int j = 0; j < num_of_pixels; j++)
+        for (unsigned int j = 0; j < num_of_pixels; j++)
         {
             pixel_t pixel = pixels[j];
-            int min_distance = INT_MAX;
+            unsigned int min_distance = UINT_MAX;
             byte min_index = 0;
-            for (int l = 0; l < k; l++)
+            for (unsigned int l = 0; l < k; l++)
             {
                 pixel_t centroid = centroids[l];
-                int distance = square_distance(pixel, centroid);
+                unsigned int distance = square_distance(pixel, centroid);
                 if (distance < min_distance)
                 {
                     min_distance = distance;
@@ -46,11 +46,11 @@ unsigned long long kmeans(
         // For each centroid find the new mean of its cluster
         for (byte j = 0; j < k; j++)
         {
-            int num_of_pixels_in_cluster = 0;
+            unsigned int num_of_pixels_in_cluster = 0;
             int r = 0;
             int g = 0;
             int b = 0;
-            for (int l = 0; l < num_of_pixels; l++)
+            for (unsigned int l = 0; l < num_of_pixels; l++)
             {
                 if (assignments[l] == j)
                 {
@@ -75,24 +75,23 @@ unsigned long long kmeans(
 
     // Calculate cost function
     unsigned long long cost = 0;
-    for (int i = 0; i < num_of_pixels; i++)
+    for (unsigned int i = 0; i < num_of_pixels; i++)
     {
         pixel_t pixel = pixels[i];
         pixel_t centroid = centroids[assignments[i]];
-        int distance = square_distance(pixel, centroid);
+        unsigned int distance = square_distance(pixel, centroid);
         if (cost + distance < cost)
             cost = ULLONG_MAX;
         else
             cost += distance;
     }
 
-    for (int i = 0; i < k; i++)
+    for (unsigned int i = 0; i < k; i++)
         free(prev_centroids[i]);
     free(prev_centroids);
 
     return cost;
 }
-
 
 bool determine_next_k(
     unsigned int *k,
@@ -109,14 +108,13 @@ bool determine_next_k(
     }
 }
 
-
 void attempt_kmeans(
     const pixel_t *pixels, unsigned int num_of_pixels,
     unsigned int min_k, unsigned int max_k,
     unsigned int max_attempts_to_optimize_k, unsigned int max_iterations_per_k,
     unsigned int *assignments, pixel_t *centroids, unsigned int *k)
 {
-    unsigned int *attempts = malloc(sizeof(int) * max_attempts_to_optimize_k);
+    unsigned int *attempts = malloc(sizeof(unsigned int) * max_attempts_to_optimize_k);
     unsigned long long *costs = malloc(sizeof(unsigned long long) * max_attempts_to_optimize_k);
 
     if (min_k > num_of_pixels)
@@ -133,7 +131,7 @@ void attempt_kmeans(
 
     *k = min_k;
 
-    for (int i = 0; i < max_attempts_to_optimize_k; i++)
+    for (unsigned int i = 0; i < max_attempts_to_optimize_k; i++)
     {
         bool finished = determine_next_k(k, min_k, max_k, attempts, costs, i);
         if (finished)

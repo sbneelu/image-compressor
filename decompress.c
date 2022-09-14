@@ -36,14 +36,15 @@ int main(int argc, char **argv)
         return 4;
     }
 
-    // if (!is_valid_format(compressed_file->format_identifier)) {
-    //     printf("Error: invalid format identifier - compressed file may be corrupted\n");
-    //     return 5;
-    // } TODO
+    if (!is_valid_format(compressed_file->format_identifier))
+    {
+        printf("Error: invalid format identifier - compressed file may be corrupted\n");
+        return 5;
+    }
 
     image_t image = decompress(compressed_file);
     write_image(out, image);
-    
+
     fclose(in);
     fclose(out);
 

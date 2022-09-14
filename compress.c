@@ -38,14 +38,15 @@ int main(int argc, char **argv)
     }
 
     byte format[4] = {format_identifier[0], format_identifier[1], format_identifier[2], format_identifier[3]};
-    // if (!is_valid_format(format)) {
-    //     printf("Error: invalid format identifier %s\n", format_identifier);
-    //     return 5;
-    // } TODO
+    if (!is_valid_format(format))
+    {
+        printf("Error: invalid format identifier %s\n", format_identifier);
+        return 5;
+    }
 
     compressed_file_t compressed_file = compress(image, format);
     write_compressed_file(out, compressed_file);
-    
+
     fclose(in);
     fclose(out);
 

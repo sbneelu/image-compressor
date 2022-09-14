@@ -27,7 +27,7 @@ void pixel_copy(pixel_t to, const pixel_t from);
  * @param from: the array of pixels to copy from
  * @param len: the length of the arrays
  */
-void pixel_array_copy(pixel_t *to, const pixel_t *from, int len);
+void pixel_array_copy(pixel_t *to, const pixel_t *from, unsigned int len);
 
 /**
  * @brief Check if two arrays of pixels are equal.
@@ -37,7 +37,7 @@ void pixel_array_copy(pixel_t *to, const pixel_t *from, int len);
  * @param len: the length of the arrays
  * @return true if the arrays are equal, false otherwise
  */
-bool pixel_arrays_equal(const pixel_t *a, const pixel_t *b, int len);
+bool pixel_arrays_equal(const pixel_t *a, const pixel_t *b, unsigned int len);
 
 /**
  * @brief Compute the square of the cartesian distance between two pixels.
@@ -46,4 +46,4 @@ bool pixel_arrays_equal(const pixel_t *a, const pixel_t *b, int len);
  * @param b: the second pixel
  * @return the square of the cartesian distance between the two pixels
  */
-int square_distance(pixel_t a, pixel_t b);
+unsigned int square_distance(pixel_t a, pixel_t b);

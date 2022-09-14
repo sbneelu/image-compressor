@@ -7,7 +7,7 @@
 
 void free_image(image_t image)
 {
-    for (int i = 0; i < image->height * image->width; i++)
+    for (unsigned int i = 0; i < image->height * image->width; i++)
     {
         free(image->pixels[i]);
     }

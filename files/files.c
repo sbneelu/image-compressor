@@ -30,7 +30,7 @@ compressed_file_t read_compressed_file(FILE *fp)
     compressed_file_t cf = malloc(sizeof(struct compressed_file));
     fread(cf->format_identifier, 1, 4, fp);
     fread(&cf->content_size, 1, 4, fp);
-    cf->content = malloc(cf->content_size);
+    cf->content = malloc(sizeof(byte) * cf->content_size);
     fread(cf->content, 1, cf->content_size, fp);
     return cf;
 }
@@ -38,6 +38,6 @@ compressed_file_t read_compressed_file(FILE *fp)
 void write_compressed_file(FILE *fp, compressed_file_t cf)
 {
     fwrite(cf->format_identifier, 1, 4, fp);
-    fwrite(&cf->content_size, sizeof(int), 1, fp);
+    fwrite(&cf->content_size, sizeof(unsigned int), 1, fp);
     fwrite(cf->content, 1, cf->content_size, fp);
 }

@@ -10,7 +10,7 @@
 compressed_file_t compress_simple_kmeans(image_t image, compressed_file_t compressed_file)
 {
     int k = 255; // Max 255 centroids as k needs to fit in one byte
-    unsigned int max_iterations = 100;
+    unsigned int max_iterations = 25;
 
     unsigned int num_of_pixels = image->width * image->height;
     unsigned int *assignments = malloc(sizeof(unsigned int) * num_of_pixels);

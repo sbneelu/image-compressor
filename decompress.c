@@ -43,13 +43,25 @@ int main(int argc, char **argv)
     }
 
     image_t image = decompress(compressed_file);
-    write_image(out, image);
+    if (image == NULL)
+    {
+        printf("Error: could not decompress file %s\n", input);
+        return 6;
+    }
+
+    bool success = write_image(out, image);
 
     fclose(in);
     fclose(out);
 
     free_image(image);
     free_compressed_file(compressed_file);
+
+    if (!success)
+    {
+        printf("Error: Could not write decompressed image.", input, output);
+        return 7;
+    }
 
     printf("Decompressed %s to %s!\n", input, output);
     return 0;

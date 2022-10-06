@@ -45,6 +45,12 @@ int main(int argc, char **argv)
     }
 
     compressed_file_t compressed_file = compress(image, format);
+    if (compressed_file == NULL)
+    {
+        printf("Error: could not compress file %s\n", input);
+        return 6;
+    }
+
     write_compressed_file(out, compressed_file);
 
     fclose(in);

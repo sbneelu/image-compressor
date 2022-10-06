@@ -51,7 +51,7 @@ typedef struct compressed_file *compressed_file_t;
  * @brief Read an image from a file pointer.
  *
  * @param fp: the file pointer to read from
- * @return the image read from the file pointer
+ * @return the image read from the file pointer, or NULL if an error occurred
  */
 image_t read_image(FILE *fp);
 
@@ -60,8 +60,10 @@ image_t read_image(FILE *fp);
  *
  * @param fp: the file pointer to write to
  * @param image: the image to write
+ *
+ * @return true if the image was written successfully, false otherwise
  */
-void write_image(FILE *fp, image_t image);
+bool write_image(FILE *fp, image_t image);
 
 /**
  * @brief Read a compressed file from a file pointer.

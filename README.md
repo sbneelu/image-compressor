@@ -70,7 +70,7 @@ Format-specific arguments:
 
 #### Description
 
-This uses a simple [k-means clustering](TODO) based algorithm to compress the image. It takes in the value for `k` and does not try to optimize it. It also takes in the maximum number of iterations to run the algorithm for. If the algorithm converges before the maximum number of iterations, it will stop early.
+This uses a simple [k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering) based algorithm to compress the image. It takes in the value for `k` and does not try to optimize it. It also takes in the maximum number of iterations to run the algorithm for. If the algorithm converges before the maximum number of iterations, it will stop early.
 
 #### Compressed data structure
 

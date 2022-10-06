@@ -130,6 +130,7 @@ bool write_image(FILE *fp, image_t image)
     free(row_pointers);
 
     png_destroy_write_struct(&png, &info);
+    return true;
 }
 
 compressed_file_t read_compressed_file(FILE *fp)

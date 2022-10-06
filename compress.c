@@ -7,14 +7,14 @@
 
 int main(int argc, char **argv)
 {
-    if (argc != 4)
+    if (argc < 4)
     {
-        printf("Usage: ./compress <format identifier> <input> <output>\n");
+        printf("Usage: ./compress <input> <output> <format identifier> [<format-specific arguments>]\n");
         return 1;
     }
-    char *format_identifier = argv[1];
-    char *input = argv[2];
-    char *output = argv[3];
+    char *input = argv[1];
+    char *output = argv[2];
+    char *format_identifier = argv[3];
 
     FILE *in = fopen(input, "r");
     if (in == NULL)
@@ -27,6 +27,7 @@ int main(int argc, char **argv)
     if (out == NULL)
     {
         printf("Error: could not open file %s\n", output);
+        fclose(in);
         return 3;
     }
 
@@ -34,6 +35,8 @@ int main(int argc, char **argv)
     if (image == NULL)
     {
         printf("Error: could not read image %s\n", input);
+        fclose(in);
+        fclose(out);
         return 4;
     }
 
@@ -41,13 +44,19 @@ int main(int argc, char **argv)
     if (!is_valid_format(format))
     {
         printf("Error: invalid format identifier %s\n", format_identifier);
+        fclose(in);
+        fclose(out);
+        free_image(image);
         return 5;
     }
 
-    compressed_file_t compressed_file = compress(image, format);
+    compressed_file_t compressed_file = compress(image, format, argc - 4, argv + 4);
     if (compressed_file == NULL)
     {
-        printf("Error: could not compress file %s\n", input);
+        printf("Error: could not compress file %s. There may be additional information above.\n", input);
+        fclose(in);
+        fclose(out);
+        free_image(image);
         return 6;
     }
 

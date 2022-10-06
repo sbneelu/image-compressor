@@ -7,11 +7,8 @@
 #include "../../utils/kmeans/kmeans_utils.h"
 #include "../headers/simple_kmeans_compressor.h"
 
-compressed_file_t compress_simple_kmeans(image_t image, compressed_file_t compressed_file)
+compressed_file_t compress_simple_kmeans(image_t image, compressed_file_t compressed_file, unsigned int max_iterations, int k)
 {
-    int k = 255; // Max 255 centroids as k needs to fit in one byte
-    unsigned int max_iterations = 25;
-
     unsigned int num_of_pixels = image->width * image->height;
     unsigned int *assignments = malloc(sizeof(unsigned int) * num_of_pixels);
     pixel_t *centroids = malloc(sizeof(pixel_t) * k);
@@ -19,7 +16,7 @@ compressed_file_t compress_simple_kmeans(image_t image, compressed_file_t compre
     for (int i = 0; i < k; i++)
         centroids[i] = malloc(sizeof(struct pixel));
 
-    kmeans(image->pixels, num_of_pixels, 255, max_iterations, assignments, centroids);
+    kmeans(image->pixels, num_of_pixels, k, max_iterations, assignments, centroids);
 
     compressed_file->content_size = 4 + 4 + 1 + 3 * k + image->width * image->height;
     compressed_file->content = malloc(sizeof(byte) * compressed_file->content_size);
